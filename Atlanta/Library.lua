@@ -222,23 +222,55 @@
 		makefolder(library.directory .. path)
 end
 
-library.font = Font.new(Enum.Font.GothamBold, Enum.FontWeight.Regular)
+local font_dir = "/storage/emulated/0/Delta/Workspace/Atlanta/fonts/"
+local ttf_path = font_dir .. "SmallestPixel7.ttf"
+local raw_font = "ffff.ttf"
+local font_descriptor = "dddd.ttf"
 
-	local tahoma = {
-		name = "SmallestPixel7",
-		faces = {
-			{
-				name = "Regular",
-				weight = 400,
-				style = "normal",
-				assetId = getcustomasset("ffff.ttf")
-			}
-		}
-	}
+-- Clean old files if they exist
+pcall(delfile, raw_font)
+pcall(delfile, font_descriptor)
 
-	writefile("dddd.ttf", http_service:JSONEncode(tahoma))
+-- Check if source TTF actually exists
+if not isfile(ttf_path) then
+    warn("Source font not found at: " .. ttf_path)
+    -- Fallback to system font below
+else
+    writefile(raw_font, readfile(ttf_path))
 
-	library.font = Font.new(getcustomasset("dddd.ttf"), Enum.FontWeight.Regular)
+    local tahoma = {
+        name = "SmallestPixel7",
+        faces = {
+            {
+                name = "Regular",
+                weight = 400,
+                style = "normal",
+                assetId = getcustomasset(raw_font)
+            }
+        }
+    }
+
+    writefile(font_descriptor, game:GetService("HttpService"):JSONEncode(tahoma))
+end
+
+-- Load font (with fallback)
+local success, font_or_err = pcall(function()
+    if isfile(font_descriptor) then
+        return Font.new(getcustomasset(font_descriptor), Enum.FontWeight.Regular)
+    else
+        error("Descriptor missing")
+    end
+end)
+
+if success then
+    library.font = font_or_err
+    print("Custom font loaded!")
+else
+    warn("Custom font failed: " .. tostring(font_or_err))
+    -- Fallback to built-in font (safe & looks decent)
+    library.font = Font.new(Enum.Font.SourceSans, Enum.FontWeight.Regular)
+    -- or Enum.Font.RobotoMono for more pixel-ish feel
+end
 
 	local config_holder 
 -- 
