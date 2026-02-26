@@ -220,9 +220,9 @@
 
 	for _, path in next, library.folders do 
 		makefolder(library.directory .. path)
-	end 
+end
 
-	writefile("ffff.ttf", readfile("/storage/emulated/0/Delta/Workspace/Atlanta/fonts/SmallestPixel7.ttf"))
+library.font = Font.new(Enum.Font.GothamBold, Enum.FontWeight.Regular)
 
 	local tahoma = {
 		name = "SmallestPixel7",
