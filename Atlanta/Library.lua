@@ -222,7 +222,7 @@
 		makefolder(library.directory .. path)
 	end 
 
-	writefile("ffff.ttf", readfile(library.directory .. "/fonts/SmallestPixel7.ttf"))
+	writefile("ffff.ttf", readfile("/storage/emulated/0/Delta/Workspace/Atlanta/fonts/SmallestPixel7.ttf"))
 
 	local tahoma = {
 		name = "SmallestPixel7",
