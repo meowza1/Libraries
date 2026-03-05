@@ -679,7 +679,7 @@ end
 		function library:panel(options) 
 			local cfg = {
 				name = options.text or options.name or "Window", 
-				size = options.size or dim2(0, 530, 0, 590),
+				size = options.size or dim2(0, 430, 0, 480),
 				position = options.position or dim2(0, 500, 0, 500),
 				anchor_point = options.anchor_point or vec2(0, 0),
 
@@ -1559,12 +1559,12 @@ end
 			--  
 
 			-- main window
-				local main_window = library:panel({
-					name = properties and properties.name or "Atlanta | ", 
-					size = dim2(0, 604, 0, 628),
-					position = dim2(0, (camera.ViewportSize.X / 2) - 302 - 96, 0, (camera.ViewportSize.Y / 2) - 421 - 12),
-					image = "rbxassetid://98823308062942",
-				})
+			local main_window = library:panel({
+				name = properties and properties.name or "Atlanta | ", 
+				size = dim2(0, 460, 0, 500),
+				position = dim2(0, (camera.ViewportSize.X / 2) - 230, 0, (camera.ViewportSize.Y / 2) - 250),
+				image = "rbxassetid://98823308062942",
+			})
 
 				local items = main_window.items
 
@@ -1657,13 +1657,13 @@ end
 			-- 
 
 			-- theming 
-				local style = library:panel({
-					name = "Style", 
-					anchor_point = vec2(0, 0),
-					size = dim2(0, 394, 0, 464),
-					position = dim2(0, main_window.items.main_holder.AbsolutePosition.X + main_window.items.main_holder.AbsoluteSize.X + 2, 0, main_window.items.main_holder.AbsolutePosition.Y),
-					image = "rbxassetid://115194686863276",
-				})
+			local style = library:panel({
+				name = "Style", 
+				anchor_point = vec2(0, 0),
+				size = dim2(0, 320, 0, 380),
+				position = dim2(0, main_window.items.main_holder.AbsolutePosition.X + main_window.items.main_holder.AbsoluteSize.X + 2, 0, main_window.items.main_holder.AbsolutePosition.Y),
+				image = "rbxassetid://115194686863276",
+			})
 
 				local watermark = library:watermark({default = os.date('Atlanta |  - %b %d %Y - %H:%M:%S')})  
 
@@ -1837,13 +1837,13 @@ end
 			--  
 
 			-- playerlist 
-				local holder = library:panel({
-					name = "Playerlist", 
-					anchor_point = vec2(0, 0),
-					size = dim2(0, 529, 0, 445),
-					position = dim2(0, main_window.items.main_holder.AbsolutePosition.X - 531, 0, main_window.items.main_holder.AbsolutePosition.Y),
-					image = "rbxassetid://107070078834415",
-				})  
+			local holder = library:panel({
+				name = "Playerlist", 
+				anchor_point = vec2(0, 0),
+				size = dim2(0, 420, 0, 360),
+				position = dim2(0, main_window.items.main_holder.AbsolutePosition.X - 422, 0, main_window.items.main_holder.AbsolutePosition.Y),
+				image = "rbxassetid://107070078834415",
+			})  
 				
 				local items = holder.items
 
