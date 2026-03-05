@@ -333,26 +333,33 @@ end
 			Frame.Text = ""
 
 			local resizing = false 
+			local active_input
 			local start_size 
 			local start 
 			local og_size = frame.Size  
 
+			local function is_pointer(input)
+				return input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch
+			end
+
 			Frame.InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				if is_pointer(input) then
 					resizing = true
+					active_input = input
 					start = input.Position
 					start_size = frame.Size
 				end
 			end)
 
 			Frame.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				if input == active_input or is_pointer(input) then
 					resizing = false
+					active_input = nil
 				end
 			end)
 
 			library:connection(uis.InputChanged, function(input, game_event) 
-				if resizing and input.UserInputType == Enum.UserInputType.MouseMovement then
+				if resizing and (input == active_input or input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 					local viewport_x = camera.ViewportSize.X
 					local viewport_y = camera.ViewportSize.Y
 
@@ -377,12 +384,18 @@ end
 
 		function library:draggify(frame)
 			local dragging = false 
+			local active_input
 			local start_size = frame.Position
 			local start 
 
+			local function is_pointer(input)
+				return input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch
+			end
+
 			frame.InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				if is_pointer(input) then
 					dragging = true
+					active_input = input
 					start = input.Position
 					start_size = frame.Position
 
@@ -400,13 +413,14 @@ end
 			end)
 
 			frame.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				if input == active_input or is_pointer(input) then
 					dragging = false
+					active_input = nil
 				end
 			end)
 
 			library:connection(uis.InputChanged, function(input, game_event) 
-				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+				if dragging and (input == active_input or input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 					local viewport_x = camera.ViewportSize.X
 					local viewport_y = camera.ViewportSize.Y
 
@@ -679,7 +693,7 @@ end
 		function library:panel(options) 
 			local cfg = {
 				name = options.text or options.name or "Window", 
-				size = options.size or dim2(0, 430, 0, 480),
+				size = options.size or dim2(0, 360, 0, 420),
 				position = options.position or dim2(0, 500, 0, 500),
 				anchor_point = options.anchor_point or vec2(0, 0),
 
@@ -1561,8 +1575,8 @@ end
 			-- main window
 			local main_window = library:panel({
 				name = properties and properties.name or "Atlanta | ", 
-				size = dim2(0, 460, 0, 500),
-				position = dim2(0, (camera.ViewportSize.X / 2) - 230, 0, (camera.ViewportSize.Y / 2) - 250),
+				size = dim2(0, 400, 0, 430),
+				position = dim2(0, (camera.ViewportSize.X / 2) - 200, 0, (camera.ViewportSize.Y / 2) - 215),
 				image = "rbxassetid://98823308062942",
 			})
 
@@ -1660,7 +1674,7 @@ end
 			local style = library:panel({
 				name = "Style", 
 				anchor_point = vec2(0, 0),
-				size = dim2(0, 320, 0, 380),
+				size = dim2(0, 270, 0, 320),
 				position = dim2(0, main_window.items.main_holder.AbsolutePosition.X + main_window.items.main_holder.AbsoluteSize.X + 2, 0, main_window.items.main_holder.AbsolutePosition.Y),
 				image = "rbxassetid://115194686863276",
 			})
@@ -1840,8 +1854,8 @@ end
 			local holder = library:panel({
 				name = "Playerlist", 
 				anchor_point = vec2(0, 0),
-				size = dim2(0, 420, 0, 360),
-				position = dim2(0, main_window.items.main_holder.AbsolutePosition.X - 422, 0, main_window.items.main_holder.AbsolutePosition.Y),
+				size = dim2(0, 340, 0, 300),
+				position = dim2(0, main_window.items.main_holder.AbsolutePosition.X - 342, 0, main_window.items.main_holder.AbsolutePosition.Y),
 				image = "rbxassetid://107070078834415",
 			})  
 				
